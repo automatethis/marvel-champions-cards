@@ -86,8 +86,42 @@ def count_player_cards(type_entered):
         print(f'Unique cards = {all_unique_count}')
         print(f'Total cards = {all_total_count}\n')    
 
+
+# list and count all encounter cards
+def count_encounter_cards(type_entered):
+    cards = open_marvel_cdb_file()
+    all_unique_count = 0
+    all_total_count = 0
+
+    if type_entered == "all":
+        type_entered = ["attachment","minion","side_scheme","treachery","support","upgrade"]
+    
+    else:
+        type_entered = [type_entered]
+    
+    for type_code in type_entered:
+        type_unique_count = 0
+        type_total_count = 0
+
+        for card in cards:
+            if card["type_code"] == type_code and "boost" in card:
+                print(f'{card["name"]} x{card["quantity"]}')
+                type_unique_count += 1
+                type_total_count += card["quantity"]
+        
+        print(f'\nUnique {type_code}s = {type_unique_count}')
+        print(f'Total {type_code}s = {type_total_count}\n')
+        all_unique_count += type_unique_count
+        all_total_count += type_total_count
+ 
+    if len(type_entered) > 1:
+        print(f'Unique cards = {all_unique_count}')
+        print(f'Total cards = {all_total_count}\n')    
+
+
 # uncomment function you want to run
 #count_heroes()
-count_player_cards("all")
+#count_player_cards("all")
+count_encounter_cards("all")
 #request_packs()
 #request_cards()
